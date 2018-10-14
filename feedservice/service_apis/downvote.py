@@ -4,6 +4,7 @@ from flask_restful import Resource
 
 from feedservice.service_api_handler import downvote_post_handler, \
     downvote_get_handler, downvote_put_handler
+from feedservice.services.user_service import is_authenticated
 from feedservice.utils import downvote_methods
 
 django.setup()
@@ -12,7 +13,14 @@ django.setup()
 class Downvote(Resource):
     def post(self):
         data = request.get_json()
-        downvote_object = downvote_post_handler.create_downvote(data)
+
+        token = request.cookies.get('token')
+        print token
+        status, user_data = is_authenticated(token)
+        if not status:
+            raise Exception
+
+        downvote_object = downvote_post_handler.create_downvote(data,user_data['username'])
         response = downvote_methods.get_downvote_dict(downvote_object)
         return jsonify({"downvote": response})
 

@@ -1,9 +1,9 @@
 from feedservice.db.feed_modules.models import Upvote,Answer
 
-def create_upvote(data):
+def create_upvote(data, username):
     try:
         answer_id = data['answer_id']
-        user_name = data['username']
+        username = username
     except Exception as e:
         print e
         raise e
@@ -13,5 +13,5 @@ def create_upvote(data):
         print e
         raise e
 
-    upvote_object = Upvote.objects.create(answer=answer_object, username =user_name)
+    upvote_object = Upvote.objects.create(answer=answer_object, username=username)
     return upvote_object

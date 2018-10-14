@@ -1,10 +1,10 @@
 from feedservice.db.feed_modules.models import Answer,Question
 
-def create_answer(data):
+def create_answer(data, username):
     try:
         string = data['string']
         question = data['question']
-        user_name = data['username']
+        username = username
     except Exception as e:
         print e
         raise e
@@ -14,5 +14,5 @@ def create_answer(data):
         print e
         raise e
 
-    answer_object= Answer.objects.create(string= string, question=question_object, username=user_name)
+    answer_object= Answer.objects.create(string= string, question=question_object, username=username)
     return answer_object

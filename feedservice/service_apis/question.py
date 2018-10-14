@@ -16,7 +16,7 @@ class Question(Resource):
         token = request.cookies.get('token')
         print token
         status, user_data = is_authenticated(token)
-        if status == None:
+        if not status:
                 raise Exception
 
         question_object = question_post_handler.create_question(data,user_data['username'])
@@ -30,10 +30,10 @@ class Question(Resource):
                 response_dict = question_methods.get_question_dict(question_object)
                 return jsonify({"question": response_dict})
 
-        filters = request.args
-        question_object = question_get_handler.get_question_by_filter(filters)
-        response_dict = [question_methods.get_question_dict(question) for question in question_object]
-        return jsonify({"questions": response_dict})
+        # filters = request.args
+        # question_object = question_get_handler.get_question_by_filter(filters)
+        # response_dict = [question_methods.get_question_dict(question) for question in question_object]
+        # return jsonify({"questions": response_dict})
 
     def put(self,question_id):
         question_objects = question_get_handler.get_single_question(question_id)

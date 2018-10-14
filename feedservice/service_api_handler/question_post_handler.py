@@ -4,7 +4,7 @@ def create_question(data, username):
     try:
         string = data['string']
         topic_id = data['topicID']
-        user_name = data['username']
+        username = username
     except Exception as e:
         print e
         raise e
@@ -14,5 +14,5 @@ def create_question(data, username):
         print e
         raise e
 
-    question_object= Question.objects.create(string= string, topic=topic_objects, username =user_name)
+    question_object = Question.objects.create(string=string, topic=topic_objects, username=username)
     return question_object
