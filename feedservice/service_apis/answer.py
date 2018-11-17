@@ -12,7 +12,6 @@ django.setup()
 class Answer(Resource):
     def post(self):
         data = request.get_json()
-
         token = request.cookies.get('token')
         print token
         status, user_data = is_authenticated(token)
@@ -21,14 +20,14 @@ class Answer(Resource):
 
         answer_object = answer_post_handler.create_answer(data, user_data[
             'username'])
-        response = answer_methods.get_answer_dict(answer_object)
-        return jsonify({"answer": response})
+        response_dict = answer_methods.get_answer_feed(answer_object)
+        return jsonify({"answer": response_dict})
 
     def get(self, answer_id= None):
         if answer_id:
             answer_object = answer_get_handler.get_single_answer(answer_id)
             if answer_object:
-                response_dict = answer_methods.get_answer_dict(answer_object)
+                response_dict = answer_methods.get_answer_feed(answer_object)
                 return jsonify({"answer": response_dict})
 
         # filters = request.args

@@ -13,3 +13,4 @@ def get_question_by_filter(filters):
     if 'topicId' in filters:
         criteria['topic_id']=filters['topicId']
     question_object = Question.objects.filter(**criteria)
+    return question_object

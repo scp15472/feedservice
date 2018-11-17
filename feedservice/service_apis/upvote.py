@@ -13,7 +13,6 @@ django.setup()
 class Upvote(Resource):
     def post(self):
         data = request.get_json()
-
         token = request.cookies.get('token')
         print token
         status, user_data = is_authenticated(token)

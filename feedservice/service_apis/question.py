@@ -18,7 +18,6 @@ class Question(Resource):
         status, user_data = is_authenticated(token)
         if not status:
                 raise Exception
-
         question_object = question_post_handler.create_question(data,user_data['username'])
         response = question_methods.get_question_dict(question_object)
         return jsonify({"question": response})
@@ -42,5 +41,14 @@ class Question(Resource):
             question_objects = question_put_handler.update_question(question_objects,data)
             response_dict = question_methods.get_question_dict(question_objects)
             return jsonify({"question":response_dict})
+        else:
+            return jsonify({"Message": "Question not found!!!"})
+
+    def delete(self, question_id):
+        question_objects = question_get_handler.get_single_question(question_id)
+        if question_objects:
+            question_objects = question_delete_handler.delete_question(question_objects)
+            response_dict = question_methods.get_question_dict(question_objects)
+            return jsonify({"question": response_dict})
         else:
             return jsonify({"Message": "Question not found!!!"})

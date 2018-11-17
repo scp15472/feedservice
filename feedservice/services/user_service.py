@@ -3,7 +3,6 @@ import requests
 
 USER_SERVICE_URL = 'http://localhost/userservice/'
 
-
 def is_authenticated(token):
     url = USER_SERVICE_URL + 'login/' + token
     response = requests.get(url)
@@ -15,7 +14,7 @@ def is_authenticated(token):
         username = data['Login']['user']
         return True, username
     else:
-        return False,None
+        return False, None
 
 
 if __name__ == '__main__':
